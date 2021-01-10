@@ -25,7 +25,7 @@ $terms_link = $data['terms'];
 echo '<div class="checkout-terms-link">' . $terms_link . '</div>';
 
 array_walk( $data['groups'], function( $group ) {
-    echo '<div class="provider-group">';
+    echo '<div class="provider-group provider-group--' . esc_attr($group['id']) . '">';
     $providers_list = [];
     //var_dump($group['providers']);
     echo '<style type="text/css">';
@@ -50,7 +50,7 @@ array_walk( $data['groups'], function( $group ) {
             }
 EOL;
         }
-        
+
     }
     echo '</style>';
     echo '<div class="provider-group-title ' . $group['id']  . '">';
