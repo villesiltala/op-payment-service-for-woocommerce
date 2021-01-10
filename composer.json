@@ -1,5 +1,5 @@
 {
-    "name": "checkout-finland/checkout-finland-for-woocommerce",
+    "name": "villesiltala/op-payment-service-for-woocommerce",
     "type": "wordpress-plugin",
     "description": "Checkout Finland is a payment gateway that offers 20+ payment methods for Finnish customers.",
     "authors": [

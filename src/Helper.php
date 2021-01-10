@@ -15,6 +15,10 @@ class Helper
      */
     public static function getIsSubscriptionsEnabled()
     {
+        // Disabled temporarily.
+        // Requires support for choosing between manual and automatic renewals.
+        return false;
+
         if (!class_exists('WC_Subscriptions_Cart')) {
             return false;
         }
