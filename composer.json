@@ -1,5 +1,5 @@
 {
-    "name": "op-merchant-services/op-payment-service-for-woocommerce",
+    "name": "villesiltala/op-payment-service-for-woocommerce",
     "type": "wordpress-plugin",
     "description": "OP Payment Service (previously known as Checkout Finland) is a payment gateway that offers 20+ payment methods for Finnish customers.",
     "authors": [
