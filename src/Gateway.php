@@ -119,7 +119,7 @@ final class Gateway extends \WC_Payment_Gateway
         // Set payment gateway ID
         $this->id = Plugin::GATEWAY_ID;
 
-        $this->has_fields = true;
+        $this->has_fields = $this->use_provider_selection();
 
         // Get dynamic payment method info.
         $this->method_info = $this->get_method_info();
@@ -366,6 +366,7 @@ final class Gateway extends \WC_Payment_Gateway
             $success_url = Router::get_url(Plugin::ADD_CARD_REDIRECT_SUCCESS_URL, Plugin::ADD_CARD_CONTEXT_CHECKOUT);
             $cancel_url = Router::get_url(Plugin::ADD_CARD_REDIRECT_CANCEL_URL, Plugin::ADD_CARD_CONTEXT_CHECKOUT);
         }
+        $this->log('OpMerchantServices: try to add new card', 'debug');
 
         $add_card_form_request = new AddCardFormRequest();
         $add_card_form_request->setCheckoutAccount($this->merchant_id);
@@ -396,6 +397,7 @@ final class Gateway extends \WC_Payment_Gateway
     {
         $getTokenRequest = new GetTokenRequest();
         $getTokenRequest->setCheckoutTokenizationId(filter_input( INPUT_GET, 'checkout-tokenization-id' ));
+        $this->log('OpMerchantServices: process_card_token', 'debug');
 
         $response = $this->client->createGetTokenRequest($getTokenRequest);
 
@@ -407,6 +409,8 @@ final class Gateway extends \WC_Payment_Gateway
      */
     private function save_card_token(GetTokenResponse $card_token)
     {
+        $this->log('OpMerchantServices: save_card_token', 'debug');
+
         $token = new WC_Payment_Token_CC();
         $token->set_card_type($card_token->getCard()->getType());
         $token->set_expiry_month($card_token->getCard()->getExpireMonth());
@@ -775,6 +779,8 @@ final class Gateway extends \WC_Payment_Gateway
         if ( is_checkout() && $this->use_provider_selection() )
         {
             $this->provider_form();
+        } else if (is_checkout()) {
+            $this->payment_description();
         }
     }
 
@@ -805,10 +811,13 @@ final class Gateway extends \WC_Payment_Gateway
         $is_token_payment = !empty($token_id);
 
         if ( ! $payment_provider && ! $is_token_payment ) {
-            throw new \Exception( __(
+            wc_add_notice(__(
                 'The payment provider was not chosen.',
                 'op-payment-service-woocommerce'
-            ));
+            ), 'error');
+            return [
+                'result' => 'failure'
+            ];
         } elseif ($is_token_payment) {
             $this->log('OpMerchantServices: process_payment, is token payment', 'debug');
             $payment_provider = 'creditcard';
@@ -1200,22 +1209,43 @@ final class Gateway extends \WC_Payment_Gateway
     public function scheduled_subscription_payment($amount, $order)
     {
         $this->log('OpMerchantServices: scheduled_subscription_payment', 'debug');
+        $fail_message = __('Cannot schedule subscription payment. No valid tokens found for order.', 'op-payment-service-woocommerce');
 
         $tokens = \WC_Payment_Tokens::get_order_tokens($order->get_id());
-        $token = reset($tokens);
+        $validTokens = [];
+        foreach ($tokens as $token) {
+            if (!$token->validate()) {
+                continue;
+            }
+            $validTokens[] = $token;
+        }
+        if (empty($validTokens)) {
+            // Log the error message if debug log is enabled.
+            $this->log( $fail_message, 'error' );
+            $order->add_order_note( $fail_message );
+            return false;
+        }
+        try {
+            $token = reset($validTokens);
 
-        $payment = new MitPaymentRequest();
-        $payment->setToken($token->get_token());
+            $payment = new MitPaymentRequest();
+            $payment->setToken($token->get_token());
 
-        $this->set_base_payment_data($payment, $order);
+            $this->set_base_payment_data($payment, $order);
 
-        // Save the reference for possible later use.
-        update_post_meta( $order->get_id(), '_checkout_reference', $payment->getReference() );
+            // Save the reference for possible later use.
+            update_post_meta( $order->get_id(), '_checkout_reference', $payment->getReference() );
 
-        // Save it also as a key for fast indexed searches.
-        update_post_meta( $order->get_id(), '_checkout_reference_' . $payment->getReference(), true );
+            // Save it also as a key for fast indexed searches.
+            update_post_meta( $order->get_id(), '_checkout_reference_' . $payment->getReference(), true );
 
-        $this->create_mit_payment($payment, $order);
+            $this->create_mit_payment($payment, $order);
+        } catch (\Exception $exception) {
+            // Log the error message if debug log is enabled.
+            $this->log( $exception->getMessage() . $exception->getTraceAsString(), 'error' );
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -1420,6 +1450,14 @@ final class Gateway extends \WC_Payment_Gateway
         $provider_form_view = new View( 'ProviderForm' );
 
         $provider_form_view->render( $res );
+    }
+
+    protected function payment_description()
+    {
+        $data['description'] = $this->description;
+
+        $view = new View('PaymentDescription');
+        $view->render($data);
     }
 
     /**

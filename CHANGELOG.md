@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.15] - 2021-02-23
+### Changed
+- Add validation for order tokens when creating scheduled Subscription/MIT payment
+- Add better error message if no tokens found
+- Change PHP version to 7.4 in Github Action
+
+## [1.5.14] - 2021-02-17
+### Changed
+- Update minimum PHP version to 7.3
+- OP Payment Service PHP-SDK version updated to 1.3.4
+
+## [1.5.13] - 2021-02-16
+### Changed
+- OP Payment Service PHP-SDK version updated
+
+## [1.5.12] - 2021-02-15
+### Changed
+- Add more logging to gateway
+- Hide the payment method group title and expand the group if only one group is available
+
+### Fixed
+- Fix payment method description support
+- Fix error handling when no payment provider chosen
+- Fix initialising of payment method groups in provider form
+
 ## [1.5.11] - 2020-12-11
 ### Fixed
 - Add missing register scripts
