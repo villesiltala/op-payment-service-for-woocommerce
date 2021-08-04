@@ -16,6 +16,9 @@ let timeout = false;
 const handleResize = function() {
     const container = document.getElementById('payment');
     const checkoutContainer = document.getElementsByClassName('payment_method_checkout_finland');
+    if (!checkoutContainer) {
+        return;
+    }
     if (new Date() - startTime < delta) {
         setTimeout(handleResize, delta)
     } else {

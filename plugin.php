@@ -3,7 +3,7 @@
  * Plugin Name: Checkout Finland for WooCommerce
  * Plugin URI: https://github.com/CheckoutFinland/checkout-finland-for-woocommerce
  * Description: Checkout Finland is a payment gateway that offers 20+ payment methods for Finnish customers.
- * Version: 1.6
+ * Version: 1.6.0
  * Requires at least: 4.9
  * Tested up to: 5.7
  * Requires PHP: 7.3
@@ -172,7 +172,7 @@ final class Plugin {
                     background-color: <?php echo get_theme_mod('op_group_highlighted_background', '#33798d'); ?> !important;
                     color: <?php echo get_theme_mod('op_group_highlighted_text', '#ffffff'); ?> !important;
                 }
-                .woocommerce-checkout #payment .op-payment-service-woocommerce-payment-fields--list-item--input:checked+.op-payment-service-woocommerce-payment-fields--list-item--wrapper, .woocommerce-checkout #payment .op-payment-service-woocommerce-payment-fields--list-item:hover .op-payment-service-woocommerce-payment-fields--list-item--wrapper {                    
+                .woocommerce-checkout #payment .op-payment-service-woocommerce-payment-fields--list-item--input:checked+.op-payment-service-woocommerce-payment-fields--list-item--wrapper, .woocommerce-checkout #payment .op-payment-service-woocommerce-payment-fields--list-item:hover .op-payment-service-woocommerce-payment-fields--list-item--wrapper {
                     border: 2px solid <?php echo get_theme_mod('op_method_highlighted', '#33798d'); ?> !important;
                 }
                 .woocommerce-checkout #payment ul.payment_methods li.op-payment-service-woocommerce-payment-fields--list-item .op-payment-service-woocommerce-payment-fields--list-item--wrapper:hover {
