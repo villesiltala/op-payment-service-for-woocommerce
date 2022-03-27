@@ -79,3 +79,14 @@ EOL;
     }
     echo '</ul>';
 });
+
+// @todo move this where it is more suitable
+// toggle payment method group sections' visibility
+// add class to handle different theme layouts 2 or 5 items per row
+echo "
+<script>
+    if (typeof initOpcheckout === 'function'){
+        initOpcheckout();
+    }
+</script>
+";
