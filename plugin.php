@@ -2,13 +2,13 @@
 /**
  * Plugin Name: Checkout Finland for WooCommerce
  * Plugin URI: https://github.com/CheckoutFinland/checkout-finland-for-woocommerce
- * Description: Checkout Finland is a payment gateway that offers 20+ payment methods for Finnish customers.
- * Version: 1.6.1
+ * Description: Notice: This plugin is no longer maintained. Use Paytrail for WooCommerce instead. Checkout Finland is a payment gateway that offers 20+ payment methods for Finnish customers.
+ * Version: 1.7.1
  * Requires at least: 4.9
- * Tested up to: 5.7
+ * Tested up to: 5.8
  * Requires PHP: 7.3
  * WC requires at least: 3.0
- * WC tested up to: 5.3
+ * WC tested up to: 5.7
  * Author: Checkout Finland
  * Author URI: https://www.checkout.fi/
  * Text Domain: op-payment-service-woocommerce
@@ -136,7 +136,8 @@ final class Plugin {
 
         // Load the plugin textdomain.
         load_plugin_textdomain( 'op-payment-service-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
+        // Register admin notice about plugin status
+        add_action( 'admin_notices', [$this, 'admin_notice_maintain'] );
         // Register customizations
         add_action( 'customize_register', [ $this, 'checkout_customizations' ] );
         // Add custom styles
@@ -181,6 +182,20 @@ final class Plugin {
             </style>
         <?php
     }
+
+    public function admin_notice_maintain() {
+        $allowed_html = array(
+            'a'      => array(
+                'href'  => array(),
+                'title' => array(),
+                'target' => array(),
+            )
+        );
+        $class = 'notice notice-error is-dismissible';
+        $message = __( 'Notice: Checkout Finland for Woocommerce is deprecated. To continue using the payment service, install this plugin: <a href="https://wordpress.org/plugins/paytrail-for-woocommerce/" target="_blank">Paytrail for Woocommerce</a>.', 'op-payment-service-woocommerce' );
+        printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), wp_kses( $message,$allowed_html ) ); 
+    }
+    
 
     /**
      * Customizer options

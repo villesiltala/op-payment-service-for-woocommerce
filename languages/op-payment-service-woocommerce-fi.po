@@ -85,12 +85,8 @@ msgid "Checkout Finland for WooCommerce"
 msgstr "Checkout Finland for WooCommerce"
 
 #: src/Gateway.php:204
-msgid ""
-"Checkout Finland for WooCommerce - the most comprehensive suite of payment "
-"methods in the market with a single contract"
-msgstr ""
-"Checkout Finland for WooCommerce - markkinoiden kattavimmat maksutavat "
-"yhdellä sopimuksella"
+msgid "<b>NOTICE: This plugin is no longer maintained. Use Paytrail for Woocommerce instead.</b></br>Checkout Finland for WooCommerce - the most comprehensive suite of payment methods in the market with a single contract."
+msgstr "<b>HUOM: Tätä lisäosaa ei enään ylläpidetä. Käytä tämän sijaan Paytrail for Woocommercea.</b></br> Checkout Finland for Woocommerce - tarjoaa markkinoiden kattavimmat maksutavat yhdellä sopimuksella."
 
 #: src/Gateway.php:219
 msgid "Payment gateway status"
@@ -110,11 +106,11 @@ msgstr "Ota testitila käyttöön"
 
 #: src/Gateway.php:233
 msgid "Debug log"
-msgstr "Testaustilan loki"
+msgstr "Lokitus"
 
 #: src/Gateway.php:235
 msgid "Enable logging"
-msgstr "Ota testitilan lokitus käytöön"
+msgstr "Ota lokitus käytöön"
 
 #. translators: %s: URL
 #: src/Gateway.php:238
@@ -125,7 +121,7 @@ msgid ""
 msgstr ""
 "Tämä asetus käynnistää kaikkien maksutapahtumien lokituksen. Loki "
 "kirjoitetaan sijaintiin %s. Toimintoa suositellaan vain "
-"virheenkorjaustarkoistuksiin, sillä se voi tallentaa henkilötietoja."
+"virheenkorjaustarkoituksiin, sillä se voi tallentaa henkilötietoja."
 
 #: src/Gateway.php:242
 msgid "Payment provider title"
@@ -180,7 +176,7 @@ msgstr "Salainen avain"
 
 #: src/Gateway.php:277 src/Gateway.php:279
 msgid "Fallback country"
-msgstr "Varamaan (fallback) valinta"
+msgstr "Oletusmaan valinta"
 
 #: src/Gateway.php:281
 msgid ""
@@ -398,3 +394,9 @@ msgstr ""
 #. Author URI of the plugin
 msgid "https://www.checkout.fi/"
 msgstr ""
+
+msgid "Notice: This plugin is no longer maintained. Use Paytrail for woocommerce instead. Checkout Finland is a payment gateway that offers 20+ payment methods for Finnish customers."
+msgstr "Huom: Tätä lisäosaa ei enään ylläpidetä. Käytä tämän pluginin sijaan Paytrail for Woocommercea. Checkout finland tarjoaa yli kaksikymmentä maksutapaa suomalaisille kuluttajille ja yrityksille."
+
+msgid "Notice: Checkout Finland for Woocommerce is deprecated. To continue using the payment service, install this plugin: <a href="https://wordpress.org/plugins/paytrail-for-woocommerce/" target="_blank">Paytrail for Woocommerce</a>."
+msgstr "Huom: Checkout Finland for Woocommerce -lisäosan kehitys on lopetettu. Maksupalvelun käyttö onnistuu jatkossa tällä lisäosalla: <a href="https://wordpress.org/plugins/paytrail-for-woocommerce/" target="_blank">Paytrail for Woocommerce</a>."
