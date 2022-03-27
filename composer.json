@@ -72,5 +72,10 @@
         "symfony/polyfill-intl-idn": "v1.20.0",
         "symfony/polyfill-intl-normalizer": "v1.20.0"
     },
-    "abandoned": "paytrail/paytrail-for-woocommerce"
+    "abandoned": "paytrail/paytrail-for-woocommerce",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
 }
